@@ -1,0 +1,18 @@
+{
+  "tasks": {
+    "start": "deno run --allow-net --watch main.tsx"
+  },
+  "imports": {
+    "~/": "./",
+    "hono": "npm:hono@4.2.3",
+    "hono/": "npm:/hono@4.2.3/",
+    "ogp-parser": "https://deno.land/x/ogp_parser@v0.1.0/mod.ts"
+  },
+  "fmt": {
+    "exclude": ["README.md"]
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx"
+  }
+}
