@@ -6,7 +6,7 @@
     "~/": "./",
     "hono": "npm:hono@4.2.3",
     "hono/": "npm:/hono@4.2.3/",
-    "ogp-parser": "https://deno.land/x/ogp_parser@v0.1.0/mod.ts"
+    "ogp-parser": "https://deno.land/x/ogp_parser@v0.1.2/mod.ts"
   },
   "fmt": {
     "exclude": ["README.md"]
