@@ -28,7 +28,26 @@ export const PageLayout: FC<LayoutProps> = ({ children }) => (
 export const CardLayout: FC<LayoutProps> = ({ children }) => (
   <html lang="ja">
     <head>
-      <Style />
+      <Style>
+        {css`
+          :root {
+            --text-color: hsl(0, 0%, 0%);
+            --bg-color: hsl(0, 0%, 100%);
+            --bg-hover-color: hsl(0, 0%, 95%);
+            --border-color: hsl(0, 0%, 65%);
+            --link-color: hsl(0, 0%, 65%)
+          }
+
+          @media (prefers-color-scheme: dark) {
+            :root {
+              --text-color: hsl(0, 0%, 100%);
+              --bg-color: hsl(217, 33%, 17%);
+              --bg-hover-color: hsl(217, 33%, 22%);
+              --border-color: hsl(0, 0%, 40%);
+            }
+          }
+        `}
+      </Style>
       <title>{SITE_TITLE}</title>
     </head>
     <body class={css`margin: 0;`}>

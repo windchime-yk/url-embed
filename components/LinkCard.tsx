@@ -13,8 +13,8 @@ const style = {
     border-radius: 6px;
     border-width: 1px;
     border-style: solid;
-    border-color: #aaa;
-    background-color: #fff;
+    border-color: var(--border-color);
+    background-color: var(--bg-color);
     font-size: 16.5px;
     text-decoration: none;
     padding: 5px 20px;
@@ -22,11 +22,11 @@ const style = {
     flex-direction: column;
     justify-content: center;
     &:hover {
-      background-color: rgba(239, 246, 251, .7);
+      background-color: var(--bg-hover-color);
     }
   `,
   title: css`
-    color: #000;
+    color: var(--text-color);;
     font-size: 1.08em;
     font-weight: bold;
   `,
@@ -36,7 +36,7 @@ const style = {
     gap: 5px;
   `,
   url: css`
-    color: #999;
+    color: var(--link-color);
   `,
 };
 

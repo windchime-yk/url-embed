@@ -34,7 +34,8 @@
     "https://deno.land/x/deno_dom@v0.1.38/src/dom/utils-types.ts": "96db30e3e4a75b194201bb9fa30988215da7f91b380fca6a5143e51ece2a8436",
     "https://deno.land/x/deno_dom@v0.1.38/src/dom/utils.ts": "55f3e9dc71d6c4a54605888d3f99d26fb0cf9973924709f159252a6933ceeabe",
     "https://deno.land/x/deno_dom@v0.1.38/src/parser.ts": "b65eb7e673fa7ca611de871de109655f0aa9fa35ddc1de73df1a5fc2baafc332",
-    "https://deno.land/x/ogp_parser@v0.1.0/mod.ts": "3ef3722d7199aeb8d011d463603fff62ce8f793e59dd1f4e009ab24463b550a9"
+    "https://deno.land/x/ogp_parser@v0.1.0/mod.ts": "3ef3722d7199aeb8d011d463603fff62ce8f793e59dd1f4e009ab24463b550a9",
+    "https://deno.land/x/ogp_parser@v0.1.2/mod.ts": "413602b968d74374421beaf707fbf20b13de1d1dbd749564613150a7ad9e630b"
   },
   "workspace": {
     "dependencies": [
