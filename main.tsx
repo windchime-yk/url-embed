@@ -3,7 +3,7 @@ import { parsedMeta } from "ogp-parser";
 import { CardLayout, PageLayout } from "~/components/Layout.tsx";
 import { Header } from "~/components/Header.tsx";
 import { Footer } from "~/components/Footer.tsx";
-import { LinkCard } from "~/components/LinkCard.tsx";
+import { InvalidLinkCard, LinkCard } from "~/components/LinkCard.tsx";
 
 const app = new Hono();
 
@@ -27,12 +27,40 @@ app.get("/", (ctx) => {
             system.
           </p>
 
-          <iframe
-            src={`${new URL(ctx.req.url).origin}/embed?url=https://example.com`}
-            frameborder="0"
-            height={120}
-            width={400}
-          />
+          <section>
+            <h3>Valid</h3>
+            <iframe
+              src={`${
+                new URL(ctx.req.url).origin
+              }/embed?url=https://example.com`}
+              frameborder="0"
+              height={100}
+              width={400}
+            />
+          </section>
+          <section>
+            <h3>Invalid</h3>
+            <section>
+              <h4>Not URL</h4>
+              <iframe
+                src={`${new URL(ctx.req.url).origin}/embed`}
+                frameborder="0"
+                height={100}
+                width={400}
+              />
+            </section>
+            <section>
+              <h4>Deny URL</h4>
+              <iframe
+                src={`${
+                  new URL(ctx.req.url).origin
+                }/embed?url=https://example.net`}
+                frameborder="0"
+                height={100}
+                width={400}
+              />
+            </section>
+          </section>
         </section>
       </main>
       <Footer />
@@ -44,19 +72,60 @@ app.get("/embed", async (ctx) => {
   const { url } = ctx.req.query();
 
   if (!url || !URL.canParse(url)) {
-    return ctx.notFound();
+    return ctx.html(
+      <CardLayout>
+        <InvalidLinkCard title="Haven't url query or can't parse URL" />
+      </CardLayout>,
+    );
   }
 
-  const { title, twitter, open_graph } = await parsedMeta(url);
+  try {
+    const { title, twitter, open_graph } = await parsedMeta(url, {
+      allowOrigins: [
+        "https://example.com",
+        /** @see https://blog.jxck.io/entries/2024-03-27/link-to-rfc.html */
+        "https://www.rfc-editor.org",
+        "https://tc39.es",
+        "https://developer.mozilla.org",
+        "https://github.com",
+        "https://jser.info",
+        "https://deno.com",
+        "https://connpass.com",
+        "https://efcl.info",
+        "https://zenn.dev",
+        "https://qiita.com",
+        "https://stackoverflow.com",
+        "https://blog.jxck.io",
+        "https://www.publickey1.jp",
+        "https://jsprimer.net",
+        "https://ics.media",
+        "https://uki00a.github.io",
+        "https://azukiazusa.dev",
+      ],
+    });
 
-  const cardTitle = open_graph.title || twitter.title || title ||
-    "タイトルなし";
+    const cardTitle = open_graph.title || twitter.title || title ||
+      "タイトルなし";
 
-  return ctx.html(
-    <CardLayout>
-      <LinkCard url={url} title={cardTitle} />
-    </CardLayout>,
-  );
+    return ctx.html(
+      <CardLayout>
+        <LinkCard url={url} title={cardTitle} />
+      </CardLayout>,
+    );
+  } catch (error) {
+    if (error instanceof Deno.errors.InvalidData) {
+      return ctx.html(
+        <CardLayout>
+          <InvalidLinkCard title="URL being denied" />
+        </CardLayout>,
+      );
+    }
+    return ctx.html(
+      <CardLayout>
+        <InvalidLinkCard title="Unkhown Error" />
+      </CardLayout>,
+    );
+  }
 });
 
 app.notFound((ctx) => {
