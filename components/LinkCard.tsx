@@ -52,7 +52,7 @@ export const LinkCard: FC<LinkCardProps> = ({ url, title }) => (
         src={`https://www.google.com/s2/favicons?sz=14&domain_url=${url}`}
         alt=""
       />
-      <span class={urlStyle}>{url}</span>
+      <span class={urlStyle}>{new URL(url).origin}</span>
     </div>
   </a>
 );
